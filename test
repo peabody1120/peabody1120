@@ -1,0 +1,27 @@
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+
+
+us_map <- map_data("state")
+
+us_map %>% 
+  filter(!region %in% c("oregon", "hawaii", "alaska", "north dakota", "nebraska", "iowa", "kansas", "kentucky", "maine", "vermont", "new hampshire", "island")) %>%
+  ggplot(aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = "lightblue", color = "black") +  # Fills specified states in blue with black outlines
+  geom_polygon(data = us_map, fill = NA, color = "black") +  # Outlines all states, including those not filled in blue
+  theme_void()
+
+
+install.packages("rnaturalearth")
+library(ggplot2)
+library(rnaturalearth)
+
+# Get European countries data
+europe_map <- ne_countries(continent = "europe", returnclass = "sf")
+
+# Plot the map
+ggplot(data = europe_map) +
+  geom_sf(fill = "lightblue", color = "black") +
+  theme_void()
+#census_api_key(784b11cf4f2d76d936e2914088cd0c28bb5a94e0)
